@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-int checkerror(int ac, char **av)
+char    *checkerror(int ac, char **av)
 {
     int i;
     char *concat_str;
@@ -38,7 +38,8 @@ int checkerror(int ac, char **av)
     i = 0;
     while(concat_str[i])
     {
-        if ((concat_str[i] >= '0' && concat_str[i] <= '9') || concat_str[i] == ' ')
+        //make sure to check whithin theres a number before + or -, if theres return
+        if ((concat_str[i] >= '0' && concat_str[i] <= '9') || concat_str[i] == ' ' || concat_str[i] == '-' || concat_str[i] == '+')
             i++;
         else
         {
@@ -46,17 +47,37 @@ int checkerror(int ac, char **av)
             exit(1);
         }
     }
-    printf("%s\n", concat_str);
-    free(concat_str);
+    return (concat_str);
+}
+
+int *turnarray(char *concat_str)
+{
+    char **str;
+    // int *array;
+    
+    str = ft_split(concat_str, ' ');
+    if (!str)
+    {
+        perror("Error: Spliting The String Failed\n");
+        exit(1);
+    }
+    int i = 0;
+    while (str[i])
+    {
+        printf("%s\n", str[i]);
+        i++;
+    }
     return (0);
 }
 
 int main(int ac, char **av)
 {
+    char *concat_str;
     // stack A
     // struct Stack stackA;
     // stackA.top = -1;
-    checkerror(ac, av);
+    concat_str = checkerror(ac, av);
+    turnarray(concat_str);
     // push(&stackA, 8);
     // push(&stackA, 5);
     // push(&stackA, 6);
