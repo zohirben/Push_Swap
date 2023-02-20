@@ -146,7 +146,7 @@ void    allocate_stacks(struct Stack **stack_a, struct Stack **stack_b, int *arr
     i = 0;
     while(i < array_len)
     {
-        push(&stack_a, array[i], array_len);
+        push(*stack_a, array[i], array_len);
         i++;
     }
 }
@@ -166,6 +166,14 @@ int main(int ac, char **av)
     shadow_array = turnarray(concat_str);
     array_len = arrlen(shadow_array);
     allocate_stacks(&stack_a, &stack_b, shadow_array, array_len);
+    
+    int i = 0;
+    while (i < array_len)
+    {
+        printf("%d\n", peek(stack_a));
+        stack_a->top--;
+        i++;
+    }
     // push(&stackA, 8);
     // push(&stackA, 5);
     // push(&stackA, 6);
