@@ -1,8 +1,8 @@
 #include "push_swap.h"
 
-void push(struct Stack *stack, int item)
+void    push(struct Stack *stack, int item, int max_size)
 {
-    if (stack->top == MAX_SIZE - 1)
+    if (stack->top == max_size - 1)
     {
         printf("Stack OverFlow\n");
         return;

@@ -3,8 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#define MAX_SIZE 100
+#include <limits.h>
 
 struct Stack {
     int top;
@@ -20,12 +19,13 @@ void    pushs(struct Stack *stack1, struct Stack *stack2);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 void    reverseRotate(struct Stack *stack);
 char	**ft_split(char const *s, char c);
-void push(struct Stack *stack, int item);
+void push(struct Stack *stack, int item, int max_size);
 char	*ft_strjoin(char *s1, char *s2);
 void    rotate(struct Stack *stack);
-size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s1);
+size_t	ft_strlen(const char *str);
 void    swap(struct Stack *stack);
+long    ft_atoi(const char *str);
 int isempty(struct Stack *stack);
 int peek(struct Stack *stack);
 int pop(struct Stack *stack);
