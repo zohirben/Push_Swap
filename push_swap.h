@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include<unistd.h>
 
 struct Stack {
     int top;
@@ -25,8 +26,8 @@ void    rotate(struct Stack *stack);
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *str);
 void    swap(struct Stack *stack);
-long    ft_atoi(const char *str);
 int isempty(struct Stack *stack);
+long    ft_atoi(const char *str);
 int peek(struct Stack *stack);
 int pop(struct Stack *stack);
 

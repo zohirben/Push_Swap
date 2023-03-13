@@ -40,9 +40,9 @@ int isempty(struct Stack *stack)
     if (stack->top == -1)
     {
         printf("Error : Stock Is Empty!\n");
-        return (0);
+        return (1);
     }
-    return 1;
+    return (0);
 }
 
 void printstack(struct Stack *stackA, struct Stack *stackB)
@@ -129,7 +129,7 @@ void    px(char x, struct Stack *stackA, struct Stack *stackB)
 {
     if (x == 'a')
     {
-        if (isempty(stackB))
+        if (!isempty(stackB))
         {
             pushs(stackA, stackB);
             printf("pa\n");
@@ -137,10 +137,10 @@ void    px(char x, struct Stack *stackA, struct Stack *stackB)
     }
     else if (x == 'b')
     {
-        if (isempty(stackA))
+        if (!isempty(stackA))
         {
             pushs(stackB, stackA);
-            printf("pa\n");
+            printf("pb\n");
         }
     }
     return;
