@@ -61,7 +61,7 @@ void printstack(struct Stack *stackA, struct Stack *stackB)
             printf("  ");
         if (j >= 0)
         {
-            printf("%d", stackB->data[j]);
+            printf("--- %d", stackB->data[j]);
             j--;
         }
         printf("\n");
