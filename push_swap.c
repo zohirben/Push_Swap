@@ -214,27 +214,21 @@ void three_case(struct Stack *stackA)
     idk3 = stackA->data[0];
 
     if (idk1 > idk2 && idk2 < idk3 && idk3 > idk1)
-    {
         sx('a', stackA, stackA);
-    }
     else if (idk1 > idk2 && idk2 > idk3 && idk3 < idk1)
     {
         sx('a', stackA, stackA);
         rrx('a', stackA, stackA);
     }
     else if (idk1 > idk2 && idk2 < idk3 && idk3 < idk1)
-    {
         rx('a', stackA, stackA);
-    }
     else if (idk1 < idk2 && idk2 > idk3 && idk3 > idk1)
     {
         sx('a', stackA, stackA);
         rx('a', stackA, stackA);
     }
     else if (idk1 < idk2 && idk2 > idk1 && idk3 < idk1)
-    {
         rrx('a', stackA, stackA);
-    }
 }
 
 void teen_case(struct Stack *stack_a, struct Stack *stack_b)
@@ -248,7 +242,7 @@ void teen_case(struct Stack *stack_a, struct Stack *stack_b)
         min = stack_a->data[index];
         proximity = (stack_a->top) / 2;
 
-        while (stack_a->data[stack_a->top] != min && !isempty(stack_a))
+        while (stack_a->data[stack_a->top] != min)
         {
             if (index >= proximity)
                 rx('a', stack_a, stack_b);
@@ -310,6 +304,8 @@ int find_lesskey(struct Stack *stack_a, int key_nbr)
 {
     int i;
 
+    // printf("key_nbr : %i\n", key_nbr);
+    // printf("%i\n", stack_a->data[stack_a->top]);
     if (isempty(stack_a))
     {
         perror("Theres no Element!\n");
@@ -326,7 +322,14 @@ int find_lesskey(struct Stack *stack_a, int key_nbr)
             return (i);
         i--;
     }
-    perror("Wtf?!\n");
+    i = stack_a->top;
+    while (i != -1)
+    {
+        if (stack_a->data[i] >= key_nbr)
+            return (i);
+        i--;
+    }
+    perror("wtf?!");
     exit(0);
 }
 
@@ -339,12 +342,11 @@ void quarter_sort(struct Stack *stack_A, struct Stack *stack_B, int *array, int 
     int less;
 
     midquarter = stack_A->top / divider;
-
     while (divider > 1)
     {
         key_nbr = array[midquarter];
         max_quarter = stack_A->top / divider;
-        while (max_quarter > 0)
+        while (max_quarter >= 0)
         {
             index = find_lesskey(stack_A, key_nbr);
             less = stack_A->data[index];
@@ -405,7 +407,7 @@ void sort_stack_back(struct Stack *stack_a, struct Stack *stack_b)
         max = stack_b->data[index];
         proximity = (stack_b->top) / 2;
 
-        while (stack_b->data[stack_b->top] != max && !isempty(stack_b))
+        while (stack_b->data[stack_b->top] != max)
         {
             if (index >= proximity)
                 rx('b', stack_a, stack_b);
@@ -440,25 +442,17 @@ int main(int ac, char **av)
     }
     else if (array_len <= 100)
     {
-        quarter_sort(stack_a, stack_b, shadow_array, 4);
+        quarter_sort(stack_a, stack_b, shadow_array, 3);
         teen_case(stack_a, stack_b);
         sort_stack_back(stack_a, stack_b);
     }
     else if (array_len > 100)
     {
-        quarter_sort(stack_a, stack_b, shadow_array, 8);
+        quarter_sort(stack_a, stack_b, shadow_array, 3);
         teen_case(stack_a, stack_b);
         sort_stack_back(stack_a, stack_b);
     }
-    printstack(stack_a, stack_b);
-    // printf("\n=-=-=-=-=%i-=-=-=\n", stack_a->top);
-
-    // if (array_len <= 10)
-    //     teen_case(stack_a, stack_b);
     // printstack(stack_a, stack_b);
-    // while(!isempty(stack_b))
-    // {
-    //     px('a', stack_a, stack_b);
-    // }
+    // printf("\n=-=-=-=-=%i-=-=-=\n", stack_a->top);
     // printstack(stack_a, stack_b);
 }
