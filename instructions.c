@@ -39,7 +39,7 @@ int isempty(struct Stack *stack)
 {
     if (stack->top == -1)
     {
-        printf("Error : Stock Is Empty!\n");
+        // printf("Error : Stock Is Empty!\n");
         return (1);
     }
     return (0);

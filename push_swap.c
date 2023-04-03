@@ -134,11 +134,12 @@ void allocate_stacks(struct Stack **stack_a, struct Stack **stack_b, int *array,
         exit(1);
     }
     (*stack_b)->top = -1;
-    i = 0;
-    while (i < array_len)
+    i = array_len - 1;
+    while (i >= 0)
     {
         push(*stack_a, array[i], array_len);
-        i++;
+        // printf("array[%i] = %i\n", i,array[i]);
+        i--;
     }
 }
 
@@ -249,7 +250,8 @@ void teen_case(struct Stack *stack_a, struct Stack *stack_b)
             else
                 rrx('a', stack_a, stack_b);
         }
-        px('b', stack_a, stack_b);
+        if (stack_a->data[stack_a->top] == min)
+            px('b', stack_a, stack_b);
     }
     three_case(stack_a);
 }
@@ -322,13 +324,6 @@ int find_lesskey(struct Stack *stack_a, int key_nbr)
             return (i);
         i--;
     }
-    i = stack_a->top;
-    while (i != -1)
-    {
-        if (stack_a->data[i] >= key_nbr)
-            return (i);
-        i--;
-    }
     perror("wtf?!");
     exit(0);
 }
@@ -352,22 +347,27 @@ void quarter_sort(struct Stack *stack_A, struct Stack *stack_B, int *array, int 
             less = stack_A->data[index];
 
             // printf("\n%i\n", stack_A->data[index]);
+
             while (stack_A->data[stack_A->top] != less)
             {
-                if (index >= ((stack_A->top) / 2))
+                if (index >= (stack_A->top / 2))
                     rx('a', stack_A, stack_B);
                 else
                     rrx('a', stack_A, stack_B);
                 // sleep(1);
             }
+            // printf("%i\n", stack_A->data[stack_A->top]);
+            // exit(0);
             px('b', stack_A, stack_B);
-            // printf("\n%i\n", max_quarter);
+            printf("\n%i\n", less);
             max_quarter--;
         }
-        midquarter += midquarter;
+        midquarter += midquarter + 1;
         divider--;
+        // printstack(stack_A, stack_B);
         // printf("\n%i\n", key_nbr);
     }
+    // exit(0);
 }
 
 int getmax(struct Stack *stack)
@@ -417,6 +417,23 @@ void sort_stack_back(struct Stack *stack_a, struct Stack *stack_b)
         px('a', stack_a, stack_b);
     }
 }
+
+void set_range(int *min_range, int *max_range, int size)
+{
+    *min_range = 0;
+    *max_range = size - 1;
+}
+
+int equal_range(int number, int min, int max, int *array)
+{
+    while (min <= max)
+    {
+        if (number == array[min])
+            return (1);
+        min++;
+    }
+    return (0);
+}
 // ------------------------------
 // 135 922 229 908 973 248
 int main(int ac, char **av)
@@ -434,24 +451,57 @@ int main(int ac, char **av)
     sorted_check(shadow_array, array_len);
     sort_array(shadow_array, array_len);
 
+    int min_range;
+    int max_range;
+    set_range(&min_range, &max_range, 32);
+    while (!isempty(stack_a))
+    {
+        if (equal_range(stack_a->data[stack_a->top], min_range, max_range, shadow_array))
+        {
+            px('b', stack_a, stack_b);
+            if (max_range < array_len)
+            {
+                min_range++;
+                max_range++;
+            }
+        }
+        else if (stack_a->data[stack_a->top] < shadow_array[min_range])
+        {
+            px('b', stack_a, stack_b);
+            rx('b', stack_a, stack_b);
+            if (max_range < array_len)
+            {
+                min_range++;
+                max_range++;
+            }
+        }
+        else if (stack_a->data[stack_a->top] > shadow_array[max_range])
+        {
+            rx('a', stack_a, stack_b);
+        }
+    }
+    sort_stack_back(stack_a, stack_b);
+    
     // printArray(shadow_array, array_len);
-    if (array_len <= 10)
-    {
-        teen_case(stack_a, stack_b);
-        sort_stack_back(stack_a, stack_b);
-    }
-    else if (array_len <= 100)
-    {
-        quarter_sort(stack_a, stack_b, shadow_array, 3);
-        teen_case(stack_a, stack_b);
-        sort_stack_back(stack_a, stack_b);
-    }
-    else if (array_len > 100)
-    {
-        quarter_sort(stack_a, stack_b, shadow_array, 3);
-        teen_case(stack_a, stack_b);
-        sort_stack_back(stack_a, stack_b);
-    }
+    // printf("%i\n", stack_a->data[stack_a->top]);
+    // exit(0);
+    // if (array_len <= 10)
+    // {
+    //     teen_case(stack_a, stack_b);
+    //     sort_stack_back(stack_a, stack_b);
+    // }
+    // if (array_len <= 100)
+    // {
+    //     quarter_sort(stack_a, stack_b, shadow_array, 4);
+    //     // exit(0);
+    //     teen_case(stack_a, stack_b);
+    // }
+    // else if (array_len > 100)
+    // {
+    //     quarter_sort(stack_a, stack_b, shadow_array, 8);
+    //     teen_case(stack_a, stack_b);
+    //     sort_stack_back(stack_a, stack_b);
+    // }
     // printstack(stack_a, stack_b);
     // printf("\n=-=-=-=-=%i-=-=-=\n", stack_a->top);
     // printstack(stack_a, stack_b);
