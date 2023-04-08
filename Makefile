@@ -1,7 +1,7 @@
-NAME = push_swap.a
+NAME = push_swap
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = push_swap.c instructions.c \
+SRCS = push_swap.c instructions.c errors.c help_tools.c \
 
 RM = rm -f
 LIBFT = libft/libft.a
